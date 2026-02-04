@@ -9,8 +9,15 @@
 <body>
 	<div class="contenitore">
 		<h1>TRIS GAME</h1>
-
+		<div class="messaggi" aria-live="polite">
+			<p class="stato" id="stato">Turno: <span id="giocatore">X</span></p>
+			<p class="esito" id="esito"></p>
+		</div>
 		<div class="area-gioco" aria-label="Area di gioco">
+			<div class="pedine-col" aria-label="Pedina X">
+				<div class="pedina x" data-symbol="X" draggable="true" aria-label="Pedina X" role="button" tabindex="0">X</div>
+			</div>
+
 			<div id="tabellone" class="tabellone" aria-label="Tabellone del Tris" role="grid">
 				<div class="cella" data-index="0" role="gridcell" aria-label="Cella 1" tabindex="0"></div>
 				<div class="cella" data-index="1" role="gridcell" aria-label="Cella 2" tabindex="0"></div>
@@ -23,7 +30,14 @@
 				<div class="cella" data-index="8" role="gridcell" aria-label="Cella 9" tabindex="0"></div>
 			</div>
 
-		<p class="stato" id="stato">Turno: <span id="giocatore">X</span></p>
+			<div class="pedine-col" aria-label="Pedina O">
+				<div class="pedina o" data-symbol="O" draggable="true" aria-label="Pedina O" role="button" tabindex="0">O</div>
+			</div>
+		</div>
+        <p class="hint">Trascina la pedina X - O nella cella vuota. <br> 
+        Vince chi allinea 3 simboli. <br></p>
+        <p class="newGameDescrizione">Premere New Game per iniziare una nuova partita.</p>
+
 		<button id="nuovaPartitaBtn" class="nuovaPartita" aria-label="Avvia una nuova partita" hidden>New Game</button>
 	</div>
 
