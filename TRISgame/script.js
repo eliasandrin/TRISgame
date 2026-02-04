@@ -1,7 +1,9 @@
 
 const tabelloneEl = document.getElementById('tabellone');
 const celle = Array.from(document.querySelectorAll('.cella'));
+const statoEl = document.getElementById('stato');
 const giocatoreEl = document.getElementById('giocatore');
+const esitoEl = document.getElementById('esito');
 const nuovaPartitaBtn = document.getElementById('nuovaPartitaBtn');
 const pedine = Array.from(document.querySelectorAll('.pedina'));
 // Stato del gioco
@@ -12,6 +14,8 @@ let partitaFinita = false;
 // Imposta colore iniziale del giocatore nello stato
 giocatoreEl.classList.remove('x', 'o');
 giocatoreEl.classList.add(giocatoreCorrente.toLowerCase());
+aggiornaPedine();
+esitoEl.hidden = true;
 
 // Combinazioni vincenti (righe, colonne, diagonali)
 const combinazioniVittoria = [
@@ -37,7 +41,12 @@ function gestisciMossa(indice, cella) {
 		partitaFinita = true;
 		tabelloneEl.classList.add('finita');
 		nuovaPartitaBtn.hidden = false;
-		alert(`Ha vinto ${giocatoreCorrente}!`);
+		aggiornaPedine();
+		statoEl.hidden = true;
+		esitoEl.hidden = false;
+		esitoEl.classList.remove('x', 'o');
+		esitoEl.classList.add(giocatoreCorrente.toLowerCase());
+		esitoEl.textContent = `Ha vinto ${giocatoreCorrente}!`;
 		return;
 	}
 
@@ -47,7 +56,11 @@ function gestisciMossa(indice, cella) {
 		partitaFinita = true;
 		tabelloneEl.classList.add('finita');
 		nuovaPartitaBtn.hidden = false;
-		alert('Pareggio!');
+		aggiornaPedine();
+		statoEl.hidden = true;
+		esitoEl.hidden = false;
+		esitoEl.classList.remove('x', 'o');
+		esitoEl.textContent = 'Pareggio!';
 		return;
 	}
 
@@ -61,6 +74,19 @@ function gestisciMossa(indice, cella) {
 	giocatoreEl.classList.remove('x', 'o');
 	giocatoreEl.classList.add(giocatoreCorrente.toLowerCase());
 	aggiornaPedine();
+	statoEl.hidden = false;
+	esitoEl.hidden = true;
+	esitoEl.classList.remove('x', 'o');
+	esitoEl.textContent = '';
+}
+
+function aggiornaPedine() {
+	pedine.forEach(function (pedina) {
+		const simbolo = pedina.getAttribute('data-symbol');
+		const attiva = !partitaFinita && simbolo === giocatoreCorrente;
+		pedina.setAttribute('draggable', attiva ? 'true' : 'false');
+		pedina.classList.toggle('disabilitata', !attiva);
+	});
 }
 
 // Controlla se la mossa genera una vittoria
@@ -74,11 +100,36 @@ function verificaVittoria(giocatore) {
 }
 
 
-// Click mouse sulle celle
+// Spostamento celle nel tabellone
 celle.forEach(function (cella) {
 	const indice = parseInt(cella.getAttribute('data-index'));
-	cella.addEventListener('click', function () {
+	cella.addEventListener('dragover', function (evento) {
+		if (partitaFinita) return;
+		if (tabellone[indice] !== null) return;
+		evento.preventDefault();
+		evento.dataTransfer.dropEffect = 'move';
+	});
+
+	cella.addEventListener('drop', function (evento) {
+		evento.preventDefault();
+		if (partitaFinita) return;
+		if (tabellone[indice] !== null) return;
+		const simbolo = evento.dataTransfer.getData('text/plain');
+		if (simbolo !== giocatoreCorrente) return;
 		gestisciMossa(indice, cella);
+	});
+});
+
+// Drag sulle pedine
+pedine.forEach(function (pedina) {
+	pedina.addEventListener('dragstart', function (evento) {
+		const simbolo = pedina.getAttribute('data-symbol');
+		if (partitaFinita || simbolo !== giocatoreCorrente) {
+			evento.preventDefault();
+			return;
+		}
+		evento.dataTransfer.setData('text/plain', simbolo);
+		evento.dataTransfer.effectAllowed = 'move';
 	});
 });
 
@@ -97,6 +148,11 @@ function resetPartita() {
 	giocatoreEl.textContent = giocatoreCorrente;
 	giocatoreEl.classList.remove('x', 'o');
 	giocatoreEl.classList.add('x');
+	aggiornaPedine();
+	statoEl.hidden = false;
+	esitoEl.hidden = true;
+	esitoEl.classList.remove('x', 'o');
+	esitoEl.textContent = '';
 
 	nuovaPartitaBtn.hidden = true;
 }
