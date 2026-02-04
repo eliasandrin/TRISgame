@@ -1,0 +1,101 @@
+
+
+body {
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	min-height: 100vh;
+	background-color: #0f172a;
+	font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+h1 {
+
+	margin: 0 0 16px;
+	font-size: 50px;
+	color: #f3f4f6;
+    text-align: center;
+}
+
+/* Allinea elementi inline (come il bottone) al centro */
+.contenitore { text-align: center; }
+
+.tabellone {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+	padding: 10px;
+	background: #111827;
+	border-radius: 12px;
+	border: 1px solid #28303f;
+}
+
+.cella {
+	width: 150px;
+	height: 150px;
+	background: #0b1220;
+	border: 1px solid #334155;
+	border-radius: 12px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 80px;
+	font-weight: 800;
+	cursor: pointer;
+	user-select: none;
+
+}
+
+.cella:hover { 
+	background: #1f2937;
+	box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+}
+
+.cella.giocata { 
+	cursor: default; 
+	background: #0a0f1a; 
+}
+
+.cella.x { color: #71ebf8; } 
+.cella.o { color: #e77dff; } 
+
+.stato { 
+	margin-top: 16px; 
+	font-size: 25px; 
+    text-align: center;
+	color: #cbd5e1; 
+}
+.stato span { font-weight: 700; } 
+
+#giocatore.x { color: #71ebf8; }
+#giocatore.o { color: #e77dff; }
+
+.hint, .nuovaPartita { 
+	margin-top: 6px; 
+	color: #94a3b8; 
+    text-align: center;
+	font-size: 18px; 
+}
+
+.nuovaPartita {
+	
+	padding: 10px 16px;
+	border-radius: 10px;
+	background: #1f2937;
+	color: #e5e7eb;
+	border: 1px solid #334155;
+	cursor: pointer;
+	display: inline-block; /* consente il centraggio con text-align del genitore */
+}
+.nuovaPartita:hover {
+	background: #374151;
+}
+
+.tabellone.finita { pointer-events: none; }
+
+@media (max-width: 520px) {
+	.cella { width: 30vw; height: 30vw; font-size: 16vw; }
+}

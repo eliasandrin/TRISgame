@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tris (Tic Tac Toe)</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="contenitore">
+		<h1>TRIS GAME</h1>
+
+		<div class="area-gioco" aria-label="Area di gioco">
+			<div id="tabellone" class="tabellone" aria-label="Tabellone del Tris" role="grid">
+				<div class="cella" data-index="0" role="gridcell" aria-label="Cella 1" tabindex="0"></div>
+				<div class="cella" data-index="1" role="gridcell" aria-label="Cella 2" tabindex="0"></div>
+				<div class="cella" data-index="2" role="gridcell" aria-label="Cella 3" tabindex="0"></div>
+				<div class="cella" data-index="3" role="gridcell" aria-label="Cella 4" tabindex="0"></div>
+				<div class="cella" data-index="4" role="gridcell" aria-label="Cella 5" tabindex="0"></div>
+				<div class="cella" data-index="5" role="gridcell" aria-label="Cella 6" tabindex="0"></div>
+				<div class="cella" data-index="6" role="gridcell" aria-label="Cella 7" tabindex="0"></div>
+				<div class="cella" data-index="7" role="gridcell" aria-label="Cella 8" tabindex="0"></div>
+				<div class="cella" data-index="8" role="gridcell" aria-label="Cella 9" tabindex="0"></div>
+			</div>
+
+		<p class="stato" id="stato">Turno: <span id="giocatore">X</span></p>
+		<button id="nuovaPartitaBtn" class="nuovaPartita" aria-label="Avvia una nuova partita" hidden>New Game</button>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
